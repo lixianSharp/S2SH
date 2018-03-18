@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 开启注解扫描 -->
+	<context:component-scan base-package="cn.itcast.g_execution"></context:component-scan>
+
+	<!-- dao实例加入容器 -->
+	<bean id="userDao" class="cn.itcast.g_execution.UserDao"></bean>
+
+	<!-- 实例化切面类 -->
+	<bean id="aop" class="cn.itcast.g_execution.TransactionAop"></bean>
+
+	<!-- Aop相关配置 -->
+	<aop:config>
+		<!-- 切入点表达式定义
+		切入点表达式：
+			拦截指定的类，生成代理对象！
+		execution(modifiers-pattern? 
+				  ret-type-pattern declaring-type-pattern? 
+				  name-pattern(param-pattern) 
+				  throws-pattern?)   
+		
+				execution(
+				modifiers-pattern?   				拦截的方法的访问修饰符
+				ret-type-pattern                   方法返回类型，必须指定
+				declaring-type-pattern?             拦截的方法所在的类
+				 name-pattern(param-pattern)       拦截的方法（以及方法的参数列表）
+				     throws-pattern?)                  方法声明的异常
+		 -->
+		
+		<!-- 1、拦截指定的方法(通用) -->
+		<!-- <aop:pointcut expression="execution(* cn.itcast.g_execution.UserDao.save(..))" id="pt" /> -->
+		
+		<!-- 2、拦截指定的类下所有的方法 -->
+		<!-- <aop:pointcut expression="execution(* cn.itcast.g_execution.UserDao.*(..))" id="pt" /> -->
+		
+		<!-- 3、拦截指定包下所有的类的所有方法 -->
+		<!-- <aop:pointcut expression="execution(* cn.itcast.g_execution.*.*())" id="pt" /> -->
+		
+		<!-- 4、拦截指定包，以及其子包下所有类的所有方法 -->
+		<!-- <aop:pointcut expression="execution(* cn..*.*(..))" id="pt" /> -->
+		
+		<!-- 5、拦截所有的public方法 -->
+		<!-- <aop:pointcut expression="execution(public * *(..))" id="pt" /> -->
+		
+		<!-- 6、拦截所有的save方法 -->
+		<aop:pointcut expression="execution(* save(..))" id="pt" />
+		
+		<!-- 7、拦截UserDao.save()方法与OrderDao.save()   下面两行等价-->
+		<!-- <aop:pointcut expression="execution(* cn..UserDao.save(..)) || execution(* cn..OrderDao.save(..))" id="pt" /> -->
+		<!-- <aop:pointcut expression="execution(* cn..UserDao.save(..)) or execution(* cn..OrderDao.save(..))" id="pt" /> -->
+		
+		<!-- 8、不拦截UserDao.save()方法   下面两行等价-->
+		<!-- <aop:pointcut expression="!execution(* cn..UserDao.save(..))" id="pt" /> -->
+		<!-- <aop:pointcut expression=" not execution(* cn.itcast.g_execution.UserDao.save(..))" id="pt" /> -->
+		
+		<!-- 9、拦截UserDao.save()同时拦截OrderDao.save() 语法是可以的，但是语义是不行的，不会被拦截-->
+		<!-- 注意：这种很少用，一般都是或者地关系即:   || 、  or-->
+		<!-- <aop:pointcut expression="execution(* cn..UserDao.save(..)) and execution(* cn..OrderDao.save(..))" id="pt" /> -->
+		<!-- <aop:pointcut expression="execution(* cn..UserDao.save(..)) &amp;&amp; execution(* cn..OrderDao.save(..))" id="pt" /> -->
+		
+		
+		<!-- 切面配置 -->
+		<aop:aspect ref="aop">
+			<aop:around method="arroud" pointcut-ref="pt" />
+		</aop:aspect>
+	</aop:config>
+</beans>      

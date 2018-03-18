@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 1. 连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="jdbc:mysql:///hib_demo"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="root"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="6"></property>
+	</bean>
+
+	<!-- 2. Spring 创建SessionFactory对象 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- 配置SessionFactory的属性 -->
+		<!--  注入dataSource -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置hibernateProperties属性  方言、自动建表、是否显示sql语句的配置 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<!-- 引入映射配置文件 -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:cn/itcast/entity/*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 3. 声明式事务管理配置 -->
+	<!-- 3.1 创建事务管理器类 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 3.2 事务通知配置  拦截到指定的方法后如何管理事务 - -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 3.3 事务Aop配置 = 切入点表达式+应用上面的事务通知 -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* cn..*Service.*(..))" />
+	</aop:config>
+
+</beans>     

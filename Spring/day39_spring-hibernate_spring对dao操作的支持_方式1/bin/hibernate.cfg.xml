@@ -1,0 +1,38 @@
+<!-- <!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		交给spring连接池维护  方式2的时候注释掉
+		
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>	
+		<property name="hibernate.connection.url">jdbc:mysql:///hib_demo</property>	
+		<property name="hibernate.connection.username">root</property>	
+		<property name="hibernate.connection.password">root</property>	
+		
+		 
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>	
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		 
+		 
+		session创建方式 ,指定为线程创建方式！
+			注意：如果sprig与hibernate整合，spring值支持以线程方式创建session，且不用配置，配置反而报错
+		
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		
+		加载映射
+		<mapping resource="cn/itcast/entity/Dept.hbm.xml"/>
+	
+	
+		
+	</session-factory>
+</hibernate-configuration>
+
+
+
+
+ -->
+

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+		<!-- 1、数据源配置 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+			<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hib_demo"></property>
+			<property name="user" value="root"></property>
+			<property name="password" value="root"></property>
+			<property name="initialPoolSize" value="3"></property>
+			<property name="maxPoolSize" value="6"></property>
+			<property name="acquireIncrement" value="2"></property>
+		</bean> 
+		
+
+		<!-- 2、JdbcTemplate配置，注入数据源 -->
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		
+		
+		<!-- 3、dao实例，注入jdbcTemplate -->
+		<bean id="deptDao" class="cn.itcast.a_tx_jdbc.DeptDao">
+			<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+		</bean>
+		
+		
+		<!--4、Service实例，注入dao实例 -->
+		<bean id="deptService" class="cn.itcast.a_tx_jdbc.DeptService">
+			<property name="deptDao" ref="deptDao"></property>
+		</bean>
+		
+		
+		<!-- 重点：Spring声明式事务管理配置~！ -->
+		<!-- 5、Spring声明式事务管理配置 -->
+		<!-- 5、1 配置事务管理器类 -->
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		
+		<!-- 5、2事务通知配置，拦截到指定的方法后如何管理事务 -->
+		<!-- find*   find开头的方法，是只读的事务 -->
+		<!-- *  上面所有的方法都不满足的时候，采用的事务控制规则-->
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+			<tx:attributes>
+				<tx:method name="find*" read-only="true"/>
+				<tx:method name="get*" read-only="true"/>
+				<tx:method name="*" read-only="false"/>
+			</tx:attributes>
+		</tx:advice>
+		
+		
+		<!-- 
+			切入点表达式:execution(* cn.itcast.a_tx_jdbc.*Service.*(..))
+				开头的*:表示访问权限，*代表所有，
+				cn.itcast.a_tx_jdbc  代表包
+				(..) 括号中的两个..代表参数的类型任意
+				*Service 表示以Service结尾的类
+				*Service 后面的*号代表所有的方法
+		 -->
+		<!-- 5、3 事务Aop配置 = 切入点表达式+应用上面的事务通知 -->
+		<aop:config>
+			<aop:pointcut expression="execution(* cn.itcast.a_tx_jdbc.*Service.*(..))" id="pt"/>
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="pt"/>
+		</aop:config>
+</beans>      

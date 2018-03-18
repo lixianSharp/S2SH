@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	
+		<!-- 加载配置文件 -->
+		<context:property-placeholder location="classpath:cn/itcast/h_jdbc/db.properties"/>
+		
+
+		<!-- 1、实例化连接池 (封装变化点) -->
+		<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+			<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hib_demo"></property>
+			<property name="user" value="root"></property>
+			<property name="password" value="root"></property>
+			<property name="initialPoolSize" value="3"></property>
+			<property name="maxPoolSize" value="6"></property>
+			<property name="acquireIncrement" value="2"></property>
+		</bean> -->
+		
+		<!-- 1、实例化连接池 (封装变化点) -->
+		<!-- 使用配置文件中的数据来实例化连接池 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="driverClass" value="${driverClass}"></property>
+			<property name="jdbcUrl" value="${jdbcUrl}"></property>
+			<property name="user" value="${user}"></property>
+			<property name="password" value="${password}"></property>
+			<property name="initialPoolSize" value="${initialPoolSize}"></property>
+			<property name="maxPoolSize" value="${maxPoolSize}"></property>
+			<property name="acquireIncrement" value="${acquireIncrement}"></property>
+		</bean>
+		
+		<!-- 2、创建JdbcTemplate对象 -->
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		
+		<!-- 实例化dao -->
+		<!-- 这是第一个案例的 -->
+		<!-- <bean id="deptDao" class="cn.itcast.h_jdbc.DeptDao_1"></bean> -->
+		
+		<!-- 这是第二个案例的 -->
+		<!-- 
+		<bean id="deptDao" class="cn.itcast.h_jdbc.DeptDao_2">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		 -->
+		
+		<!-- 这是第三个案例的 -->
+		<!-- 
+		<bean id="deptDao" class="cn.itcast.h_jdbc.DeptDao_3">
+			<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+		</bean> 
+		 -->
+		 
+		 
+		<!-- 这是第四个案例的 -->
+		<bean id="deptDao" class="cn.itcast.h_jdbc.DeptDao_4">
+			<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+		</bean>  
+		
+</beans>        

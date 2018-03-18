@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd"
+     	 default-autowire="byType">
+
+
+		<!-- 配置：需要创建的对象、对象依赖关系处理 -->
+		<!-- 方式4：自动装配(了解)
+			a、 default-autowire="byType" 配置到全局
+				当前所有的bean都采用"根据类型自装配"
+			autowire="byName" 根据名称自动装配，会去容器中找指定名称的对象，注入到set方法的参数中！(对象名默认为类名的第一个字母小写(如userAction))
+			autowire="byType" 根据类型自动装配，一定要确保该类型对应的对象在IOC容器中唯一，否则报错！
+		 -->
+		<bean id="userDao" class="cn.itcast.e_autowire.UserDao"></bean>
+		<bean id="userService" class="cn.itcast.e_autowire.UserService" autowire="byName"></bean>
+		<bean id="userAction" class="cn.itcast.e_autowire.UserAction" autowire="byName"></bean>
+</beans>

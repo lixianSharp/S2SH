@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+     	 
+	<!-- IOC容器，给对象属性赋值 在创建User对象的时候，同时给其属性(list、map、properties)赋值 -->
+	<bean id="user" class="cn.itcast.c_di.User">
+		<property name="id" value="1000"></property>
+		<property name="name" value="jack"></property>
+		<!-- 给list集合赋值 -->
+		<property name="list">
+			<list>
+				<value>cn,usa</value>
+				<value>lixianyuan</value>
+			</list>	
+		</property>
+		<!-- 给map集合赋值 -->
+		<property name="map">
+			<map>
+				<entry key="cn" value="China"></entry>
+				<entry key="usa" value="1234"></entry>
+			</map>
+		</property>
+		<!-- 给properties对象赋值 -->
+		<property name="prop">
+			<props>
+				<prop key="cn">CHINA</prop>
+				<prop key="usa">America</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

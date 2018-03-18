@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- IOC容器创建对象 -->
+	<!-- 2)调用无参构造函数  -->
+	<bean id="user1" class="cn.itcast.b_create_obj.User"></bean>
+	
+	<!-- 3）调用有参构造函数，创建对象 -->
+	<!-- String str = new String("jack"); -->
+	<bean id="str" class="java.lang.String">
+		<!-- 构造函数的参数 值 -->
+		<constructor-arg  value="jack"></constructor-arg>
+	</bean>
+	
+	<!-- 创建User对象，且赋值 -->
+	<!-- 
+		value:当直接给属性值得时候使用value赋值
+		ref: 当应用的是IOC容器中的对象的时候，使用ref
+	 -->
+	 <bean id="user" class="cn.itcast.b_create_obj.User">
+	 	<constructor-arg index="0" type="int" value="10000"></constructor-arg>
+	 	<constructor-arg index="1" type="String" ref="str"></constructor-arg>
+	 </bean>
+</beans>

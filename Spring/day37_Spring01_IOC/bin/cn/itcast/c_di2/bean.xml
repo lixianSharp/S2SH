@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+		<!-- 配置：需要创建的对象、对象依赖关系处理 -->
+		
+		<!-- 方式1：通过set方法注入，这种方式是最常用!  将对象的创建交给spring的IOC容器去创建     默认是单例的-->
+		<!-- 
+		<bean id="userdao" class="cn.itcast.c_di2.UserDao"></bean>
+		
+		<bean id="userService" class="cn.itcast.c_di2.UserService">
+			属性
+			<property name="userDao" ref="userdao"></property>	
+		</bean>
+		
+		<bean id="userAction" class="cn.itcast.c_di2.UserAction">
+			<property name="userService" ref="userService"></property>
+		</bean> -->
+		
+		
+		
+		<!-- 方式2：内部bean的方式 -->
+		<!-- 总结:当创建的对象，不被容器其他地方引用的时候，可以这样写!这样写不通用，内部对象只能用一次-->
+		<!-- 这里，action如果是单例，内部bean默认是单例，action如果是多例，内部bean就是多例 -->
+		<!-- 
+		<bean id="userAction" class="cn.itcast.c_di2.UserAction" scope="prototype">
+			<property name="userService">
+				<bean class="cn.itcast.c_di2.UserService">
+					<property name="userDao">
+						<bean class="cn.itcast.c_di2.UserDao"></bean>
+					</property>
+				</bean>	
+			</property>
+		</bean> -->
+		 
+		
+		
+		<!--   xmlns:p="http://www.springframework.org/schema/p" -->
+		<!-- 方式3:p名称空间 -->
+		<!-- <bean id="user" class="cn.itcast.c_di2.User">
+			<property name="id" value="100"></property>
+		</bean>  
+		-->
+		<!-- 
+		<bean id="str" class="java.lang.String">
+			用构造方法给其赋值
+			<constructor-arg value="Lumia950"></constructor-arg>
+		</bean>
+		<bean id="user" class="cn.itcast.c_di2.User" p:id="1520" p:name-ref="str"></bean>  -->
+		
+	
+		
+		<!-- 将方式1改为p名称空间的 -->
+		<bean id="userDao" class="cn.itcast.c_di2.UserDao"></bean>
+		<bean id="userService" class="cn.itcast.c_di2.UserService" p:userDao-ref="userDao"></bean>
+		<bean id="userAction" class="cn.itcast.c_di2.UserAction" p:userService-ref="userService"></bean>
+		
+	
+</beans>

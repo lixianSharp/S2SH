@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<package name="test" extends="struts-default">
+
+		<!--  class="deptAction"  ioc容器创建的action对象 -->
+		<!-- 
+			http://localhost:8080/day39SSH/dept_execute.action   保存
+			http://localhost:8080/day39SSH/dept.action           （默认找execute方法返回success）
+			
+			http://localhost:8080/day39SSH/dept_delete.action?id=35     删除
+			http://localhost:8080/day39SSH/dept_findById.action?id=32   主键查询
+			
+		 -->
+		<action name="dept_*" class="deptAction" method="{1}">
+			<result>/index.jsp</result>
+			<result name="{1}">/index.jsp</result>
+		</action>
+
+	</package>
+</struts>

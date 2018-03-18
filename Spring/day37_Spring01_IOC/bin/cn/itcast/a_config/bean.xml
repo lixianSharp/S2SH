@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+	<!-- 把对象加入IOC容器    默认是单例的-->	
+	<!-- <bean id="user" name="user2,user3,user4" class="cn.itcast.a_config.User"></bean>  -->
+	<!-- 细节1:
+		id 与name的区别：
+			id 不能以数字开头，不能有特殊符号，不能有空格、逗号等;id 不能重复！
+			name 可以以数字开头，可以有特殊符号，如果name值重复，编译没有问题，但运行报错 -->
+	
+	<!-- <bean id="user1" name="user2,user3 user4" class="cn.itcast.a_config.User"></bean>
+	<bean name="user5" class="cn.itcast.a_config.User"></bean>
+	<bean id="user6" class="cn.itcast.a_config.User"></bean> -->
+	
+	
+	
+	<!--细节2：(单例/多例)  -->	
+	<!-- 
+		scope="singleton" 默认表示单例！
+		scope="prototype" 表示多例
+		init-method="" 在创建完对象之后执行初始化方法
+		destroy-method="" 在调用容器类的destroy()方法时候，对单例的对象有效！
+		lazy-init="true"  延迟初始化 / 这个属性的设置只对单例有影响，对多例没有影响。   单例的对象默认是在创建容器的时候就创建所有单例的对象，如果希望在第一次访问的时候创建单例的对象，就设置延迟初始化。
+		
+		
+		Bean的生命周期:
+			 bean在xml中配置:
+			 	singleton 单例(只创建一个对象):
+			 		1)创建对象
+			 			如果有配置延迟初始化：
+			 				lazy-init=true 如果单例的对象有配置延迟初始化，在创建容器之后，在第一次从容器获取对象的时候创建单例的对象!
+			 			如果没有配置或延迟初始化为默认值，单例的对象会在创建容器的时候创建对象
+			 		2)执行初始化，init-method配置的方法会执行
+			 		3)调用destroy()方法的时候，容器在销毁单例对象的实例的时候，会调用destroy-method对象的方法，此时bean对象会被销毁!
+			 	
+			 	prototype 多例(创建不止一个对象):
+			 		1)每次在从容器获取对象的时候，都会创建新的对象	
+			 		2)每次创建完对象后，就执行初始化方法
+			 		3)java会回收不用的资源(jvm GC)
+	 -->			
+	<bean id="user" class="cn.itcast.a_config.User" init-method="init" destroy-method="destroy_" lazy-init="true" scope="prototype"></bean>
+
+</beans>

@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+		<!-- 连接池，通过spring管理 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="jdbcUrl" value="jdbc:mysql:///hib_demo"></property>
+			<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+			<property name="user" value="root"></property>
+			<property name="password" value="root"></property>
+			<property name="initialPoolSize" value="3"></property>
+			<property name="maxPoolSize" value="6"></property>
+		</bean>
+
+
+		<!-- Spring 与 Hibernate整合 (Spring创建SessionFactory) -->
+		<!-- 方式1：直接加载hibernate.cfg.xml的方式，创建sessionFactory对象 -->
+		<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+			<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		</bean> -->
+		
+		
+		<!-- 方式2：连接池交给spring管理，其他配置还是写到hibernate.cfg.xml中 -->
+		<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"></property>
+			<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		</bean> -->
+		
+		
+		<!-- 方式3：所有的配置都在spring中完成  所以在hibernate.cfg.xml文件中的全部都要注释掉-->
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+			<!-- a、注入连接池 -->
+			<property name="dataSource" ref="dataSource"></property>
+			
+			<!-- b、hibernate常用配置：方言、自动建表、显示sql -->
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<prop key="hibernate.show_sql">true</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+				</props>
+			</property>
+			
+			<!-- c、加载所有的映射(根据路径加载) -->
+			<!-- <property name="mappingLocations">
+				<list>
+					<value>classpath:cn/itcast/entity/Dept.hbm.xml</value>
+				</list>
+			</property>
+			 -->
+			 
+			<!-- c、加载所有的映射(根据目录加载所有的映射) -->
+			<property name="mappingDirectoryLocations">
+				<list>
+					<value>classpath:cn/itcast/entity</value>
+				</list>
+			</property>
+		</bean>
+		
+		
+		
+	
+		<!-- 创建dao实例 -->
+		<bean id="deptDao" class="cn.itcast.dao.DeptDao">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		
+		<!-- 创建service实例 -->
+		<bean id="deptService" class="cn.itcast.service.DeptService">
+			<property name="deptDao" ref="deptDao"></property>
+		</bean>
+		
+		<!-- 创建action实例 -->
+		<bean id="deptAction" class="cn.itcast.action.DeptAction">
+			<property name="deptService" ref="deptService"></property>
+		</bean>
+	
+		<!-- 
+			Spring声明式事务管理配置
+		 -->
+		 <!--a、事务管理器   创建事务管理器类 -->
+		 <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		 	<property name="sessionFactory" ref="sessionFactory"></property>
+		 </bean>
+		 
+		 <!--b、事务通知  -->
+		 <tx:advice id="txAdvice" transaction-manager="txManager">
+		 	<tx:attributes>
+		 		<tx:method name="*" read-only="false"/>
+		 	</tx:attributes>
+		 </tx:advice>
+		 
+		 <!--在这里的 execution(* cn..*Service.*(..))  等价于  execution(* cn.itcast.Service.DeptService.*(..))-->
+		 <!--c、Aop配置 = 切入点表达式 + 应用通知规则  -->
+		 <aop:config>
+		 	<aop:advisor advice-ref="txAdvice" pointcut="execution(* cn..*Service.*(..))"/>
+		 </aop:config>
+	
+</beans>     
