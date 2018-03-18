@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<!-- 这个项目的默认包： 包含系统的18个拦截器和自己定义的权限拦截器 -->
+	<!-- 可以把拦截器单独放一个地方 -->
+	<!-- 如果该包要被继承，可以将该包定义为抽象的 -->
+	<package name="myDefault" extends="struts-default" abstract="true"> 
+		<!-- 定义拦截器 和拦截器栈：权限相关的拦截器 -->
+		<interceptors>
+			<!-- 声明自定义的拦截器 ，包含系统的18个拦截器和自己定义的权限拦截器-->
+			<interceptor name="userLoginInter" class="gz.itcast.interceptor.UserLoginInterceptor"></interceptor>
+
+			<!-- 拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="userLoginInter"></interceptor-ref><!-- 这是自定义的拦截器 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref><!-- 这是默认的18个拦截器 -->
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 全局起作用的拦截器 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+	</package>
+
+
+	<!-- 业务包继承自定义的默认包(myDefault) -->
+	<package name="user" namespace="/user" extends="myDefault" abstract="false">
+		 
+		<!-- 用户模块的action -->
+		<action name="user_*" class="gz.itcast.web.UserAction" method="{1}">
+			<!-- 不想被外界直接访问的资源可以放到WEB-INF目录下 -->
+			<result name="success">/WEB-INF/jsp/userIndex.jsp</result>
+			<result name="error">/error.jsp</result>
+			<result name="login">/login.jsp</result><!-- 拦截器中返回的视图标记，哈哈 -->
+			<result name="lixian">/lixian.jsp</result>
+			
+		</action>
+		
+		
+		<!-- 感觉注释掉的代码是多余的呀！！！ -->
+		<!-- 需要权限访问的页面  这是配置拦截器中返回的视图标记呀！ 感觉这个是多余的啊！-->
+		<!--
+ 		<action name="*">注意:这个并不是拦截器，等价于下面注释掉的代码
+			<result>/WEB-INF/{1}.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action> 
+		-->
+		
+		<!-- 		
+		<action name="*">
+			<result>/WEB-INF/{1}.jsp</result>
+		</action>
+		等价于下面的代码：
+		<action name="userIndex">
+			<result>/WEB-INF/jsp/userIndex.jsp</result>
+		</action>
+		<action name="userPass">
+			<result>/WEB-INF/jsp/userPass.jsp</result>
+		</action> 
+		-->
+	</package>
+</struts>

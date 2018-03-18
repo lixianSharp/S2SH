@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<!-- 包含常量配置 -->
+	<include file="constant.xml"></include>
+
+
+	<!-- 每个业务模块的配置 -->
+	<!-- <include file="gz/itcast/a_action/struts-action.xml"></include>
+	<include file="gz/itcast/b_path/struts-path.xml"></include>
+	<include file="gz/itcast/c_constant/struts-constant.xml"></include>
+	<include file="gz/itcast/d_ioc/struts-ioc.xml"></include>
+	<include file="gz/itcast/e_scope/struts-scope.xml"></include> -->
+	<include file="gz/itcast/f_data/struts-data.xml"></include>
+	<!-- <include file="gz/itcast/g_convert/struts-convert.xml"></include>
+	<include file="gz/itcast/h_upload_down/struts-upload.xml"></include> -->
+</struts>

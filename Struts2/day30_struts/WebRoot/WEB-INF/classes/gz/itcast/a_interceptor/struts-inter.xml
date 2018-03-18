@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="inter" extends="struts-default" namespace="/inter" abstract="false">
+		<!-- 定义拦截器 -->
+		<interceptors>
+			<!-- 你自定义的拦截器 -->
+			<interceptor name="inter1" class="gz.itcast.a_interceptor.MyInterceptor1"></interceptor>
+			<interceptor name="inter2" class="gz.itcast.a_interceptor.MyInterceptor2"></interceptor>
+			<!-- 定义拦截器栈     注意：栈的数据结构是：先进后出的，例如压栈和弹栈-->
+			<interceptor-stack name="interStack">
+				<interceptor-ref name="inter1"></interceptor-ref>
+				<interceptor-ref name="inter2"></interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="myStack">
+				<!-- 引入了父包(struts-default)默认的18个拦截器 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<!-- 引入了自定义的两个拦截器 -->
+				<interceptor-ref name="interStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		
+		<!-- 全局起作用的拦截器：当前包的拦截器会把父包(struts-default)的拦截器覆盖掉，
+				怎么办？?—》可以通过使用拦截器栈解决呀！ -->
+		<!-- <default-interceptor-ref name="inter1"></default-interceptor-ref> -->
+		<!-- 注意：只有一个拦截器的时候，并且没有使用拦截器栈的时候，使用全局起作用的拦截器的时候，
+							有多少个action，他就会创建多少个对应的拦截器对象的啊！ -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<action name="user_*" class="gz.itcast.a_interceptor.UserAction" method="{1}">
+			<!-- 使用拦截器 局部起作用的拦截器 -->
+			<!-- <interceptor-ref name="inter1"></interceptor-ref> -->
+			<result name="success">/index.jsp</result>
+		</action>
+	
+	
+		<action name="book_*" class="gz.itcast.a_interceptor.BookAction" method="{1}">
+			<param name="name">李贤元</param><!-- 为BookAction中的setName方法中的name参数注入值：李贤元 -->
+			<result>/index.jsp</result>
+		</action>
+	</package>
+
+
+</struts>

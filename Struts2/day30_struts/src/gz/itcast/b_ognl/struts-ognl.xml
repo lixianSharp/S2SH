@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="ognl" extends="struts-default" namespace="/ognl" abstract="false">
+		<action name="user_*" class="gz.itcast.b_ognl.UserAction" method="{1}">
+			<!-- <result>/index.jsp</result> -->
+			<result>/ognl.jsp</result>
+		</action>
+	</package>
+</struts>

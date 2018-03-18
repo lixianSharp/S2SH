@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="a_action" extends="struts-default" namespace="/action" abstract="false">
+		<!-- action的配置 -->
+		<!-- action的名称。用于访问该Action的路径 -->
+		<action name="action1" class="gz.itcast.a_action.UserAction" method="login">
+			<!-- 视图的配置 -->
+			<result name="success">/index.jsp</result>
+		</action>
+		
+		<action name="action2" class="gz.itcast.a_action.UserAction2" method="login">
+			<result name="success">/index.jsp</result>
+		</action>
+		
+		<action name="action3" class="gz.itcast.a_action.UserAction3" method="login">
+			<result name="success">/index.jsp</result>
+		</action>
+	
+	</package>
+</struts>

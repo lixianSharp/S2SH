@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="model" extends="struts-default" namespace="/model" abstract="false">
+		<!-- 自定义拦截器 -->
+		<interceptors>
+			<!-- 拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref><!-- struts默认的18个拦截器栈 -->
+				<!-- 增加令牌拦截器 --><!-- 支持防止重复提交的拦截器  当发生重复提交后，该拦截器会返回一个视图标记："invalid.token"-->
+				<interceptor-ref name="token"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 定义全局起作用的拦截器。（这句是设置所有Action自动调用的拦截器堆栈）-->
+		<!-- <default-interceptor-ref name="myStack"></default-interceptor-ref> -->
+		
+		
+		<action name="user_*" class="gz.itcast.c_modeldriver.UserAction" method="{1}">			
+			<interceptor-ref name="myStack"></interceptor-ref> 
+			<result name="ui">/ui.jsp</result>
+			<!-- 当表单重复提交后跳转的页面 -->
+			<result name="invalid.token">/model.jsp</result>			
+		</action>
+	</package>
+</struts>

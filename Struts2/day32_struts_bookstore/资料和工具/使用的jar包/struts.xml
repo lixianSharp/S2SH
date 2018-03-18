@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 指定国际化资源包的加载路径 -->
+	<constant name="struts.custom.i18n.resources" value="resources.message"></constant>
+	<!-- 修改struts的UI主题 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	
+	<include file="gz/itcast/a_i18n/struts-i18n.xml"></include>
+	<include file="gz/itcast/b_validate/struts-validate.xml"></include>
+	<include file="gz/itcast/c_modeldriver/struts-model.xml"></include>
+</struts>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="ioc" extends="struts-default" namespace="/ioc">
+		<action name="upload" class="gz.itcast.d_ioc.UploadAction" method="upload">
+			<!-- 3)使用该配置可以往Action对象的属性注入内容(只要该Action对象的属性有settt方法都可以使用param进行注入) 
+			   param:
+			   	   name:setter方法名。setSavePath->savePath
+			-->
+			<param name="savePath">d:/images/</param><!-- d:/images/ 表示为setSavePath方法中的形参赋值 -->
+			<result>/login.jsp</result>
+		</action>
+		 
+	</package>
+
+</struts>
+
+
+

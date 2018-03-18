@@ -1,0 +1,37 @@
+﻿使用Ognl表达式取ValueStack数据
+
+使用<s:property/>标签可以使用Ognl表达式获取值栈的数据
+一、List栈的数据（不需要#号,不需要key）
+		输入Ognl：user
+		
+		作用：直接到List栈的每个对象去搜索对应的属性
+		搜索规则：
+			从List栈的栈顶开始搜索——》user ——》返回，找不到继续向下找
+			栈的第二个元素		  ——》user ——》返回，找不到继续向下找
+			......				  ——》user ——》空
+
+			
+				注意：在List栈中尽量不要再两个栈对象中出现相同的属性名，如果出现相同的属性名，只获取第一个对象的属性。
+		
+
+
+application域：
+#application.application_data
+
+request域
+#request.request_data
+#request_data
+
+session域
+#session.session_data
+#session_data
+
+
+
+
+
+
+
+
+
+

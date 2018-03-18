@@ -1,0 +1,19 @@
+* {
+	font-size: 9pt;
+}
+
+.OperBtn {
+	FONT-SIZE: 12px;
+	CURSOR: hand;
+	COLOR: black;
+	PADDING-TOP: 2px;
+	FONT-FAMILY: "宋体";
+	HEIGHT: 20px;
+	border-top: 1px solid gray;
+	border-right: 1px double #0066CC;
+	border-bottom: 1px groove #0066CC;
+	border-left: 1px groove #0066CC;
+	background-image: url('imgs/btn2.jpg');
+	width: 58px;
+	background-color: #D8F2FE
+}

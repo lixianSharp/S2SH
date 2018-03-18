@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+
+	<!--package中各项参数的含义 
+	package的配置：
+		package: 代表一个包。管理Action的配置。在同一个包下面不能有同名的Action
+		name: 包名。在同一个项目中不能出现同名的包。
+		extends: 继承。类似于类的继承。如果一个包继承另一个包，那么就会把父包的功能继承下来。
+					我们开发的包就必须继承struts-default包。
+		namespace: 名称空间。区分不同包的访问路径。默认值"/"
+			用户访问Action的路径搜索规则：
+					http://localhost:8080/day28_struts/namespace的值/action的name值
+				
+				http://localhost:8080/day28_struts/user/a/b/login2.action   ok!
+ 				http://localhost:8080/day28_struts/user/b/login2.action     ok!   
+				http://localhost:8080/day28_struts/user/login2.action		ok!
+				http://localhost:8080/day28_struts/a/b/login2.action		不行！
+				
+				
+			用户访问：http://localhost:8080/day28_strtus/user/a/b/login2.action	
+				先搜索：http://localhost:8080/day28_struts/user/a/b/login2.action    没有的话就继续搜索，有就返回
+				接着搜索：http://localhost:8080/day28_struts/user/a/login2.action		没有的话就继续搜索，有就返回
+				接着搜索：http://localhost:8080/day28_struts/user/login2.action		有，	有就返回 (为止)
+				
+	   abstract: 表示当前包是否抽象。如果当前包是抽象包，那么不能含有action。抽象包中一般用来定义拦截器，公共视图，不做具体的业务。		
+	 -->
+	<package name="xxx" extends="struts-default" namespace="/user" abstract="false">
+		
+		<!-- 配置Action  http://localhost:8080/day28_struts/login.action-->
+		<!-- 
+		action的配置：
+			name: action的名称。用于访问该Action的路径
+			class: Action业务对象类名。一定是全名(包名+类名)
+			method: 执行的业务方法。不写默认是execute
+		
+		result配置：
+			name: 表示视图的标记。在一个Action中视图标记的名称不要重复。
+			type: 跳转的类型
+					redirect: 重定向
+					dispatcher: 转发(默认值)
+					redirectAction: 重定向到Action
+					chain： 转发到Action。可以在不同Action中通过request域共享数据。
+					stream： 下载文件的时候用到。
+			文本内容: 跳转到的页面或者Action
+		 -->
+		<action name="login" class="gz.itcast.action.LoginAction"><!-- method不写默认为execute -->
+			<result name="success" type="chain">login2</result><!-- 配置视图 -->
+		</action>
+		
+		<!-- 配置Action http://localhost:8080/day28_struts/user/login2.action -->
+		<action name="login2" class="gz.itcast.action.LoginAction" method="login">
+			<result name="login">/login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 配置Action http://localhost:8080/day28_struts/book.action -->
+	<package name="book" extends="struts-default" namespace="/" abstract="false">
+		<!-- method代表要执行的方法 -->
+		<action name="book" class="gz.itcast.action.BookAction" method="execute">
+			<result name="success">/index.jsp</result>
+		</action>
+	</package>
+</struts>
+
+
+
+
+

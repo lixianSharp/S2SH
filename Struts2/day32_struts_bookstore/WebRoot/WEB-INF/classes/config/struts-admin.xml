@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<!-- 后台配置 -->
+<struts>
+	<package name="admin" extends="struts-default" namespace="/admin">
+		<!-- 图书模块 -->
+		<action name="book_*" class="gz.itcast.biz.admin.book.web.action.BookAction" method="{1}">
+			<!-- 保存图书图片目录 -->
+			<param name="savePath">/imgs</param>
+			<result name="toAdd">/jsp/admin/book/add.jsp</result>
+			<result name="saveBook">/jsp/admin/book/add.jsp</result>
+		</action>
+	
+	</package>
+</struts>

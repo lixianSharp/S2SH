@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<package name="cons" extends="struts-default" namespace="/cons" abstract="false">
+		<!-- 全局视图通配符：把该包下的所有action共用的视图 都集中写在这里-->
+		<global-results>
+			<result name="success">/login.jsp</result>			
+		</global-results>
+		
+		<!-- UserAction的配置 -->
+		<action name="user_*" class="gz.itcast.c_constant.UserAction" method="{1}">
+			<!-- 局部的视图会覆盖全局的视图 -->
+		    <result name="regist">/{1}.jsp</result>
+		</action>
+		<!-- BookAction的配置 -->
+		<action name="book_*" class="gz.itcast.c_constant.BookAction" method="{1}">
+		</action>
+	
+	
+		<!-- struts2的动态方法调用：struts2提供的 一种访问action的方法.
+			访问action的路径规则：user!login
+						      action的名称!action的方法
+			
+			http://localhost:8080/day29_struts/cons/user!login.action
+			http://localhost:8080/day29_struts/cons/user!regist.action
+			
+		 -->
+		 <action name="user" class="gz.itcast.c_constant.UserAction">
+		 	<result name = "success">/login.jsp</result>
+		 </action>
+		
+		<!-- 默认配置
+		name:必须填
+		class: 可选项。默认配置：ActionSupport类。该类继承自struts-default 
+				（<default-class-ref class="com.opensymphony.xwork2.ActionSupport" />）
+		
+		result:
+			name:可选。默认配置：success
+			type：可选。默认配置：dispatch
+		 -->
+		 <!-- http://localhost:8080/day29_struts/cons/book.action -->
+		 <!-- 全部使用默认配置的action的作用：专门用于转发到WEB-INF下的页面 -->
+		<action name="book" class="" method="">
+			<result name= "">/WEB-INF/jsp/login.jsp</result>
+		</action>
+		
+		
+	</package>
+	
+</struts>
+
+

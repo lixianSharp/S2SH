@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	
+	<package name="validate" extends="struts-default" namespace="/validate">
+		<action name="user_*" class="gz.itcast.b_validate.UserAction" method="{1}">
+			<result name="success">/index.jsp</result>
+			<!-- 以后记得要加上input视图，因为在发生一些struts2的业务错误(例如类型转换错误，文件转换错误，数据转换错误，)交给input视图去处理 -->
+			<result name="input">/register.jsp</result>
+		 </action>
+	</package>
+
+</struts>

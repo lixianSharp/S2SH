@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下  -->
+<struts>
+	<package name="scope" extends="struts-default" namespace="/scope">
+		<action name="user_*" class="gz.itcast.e_scope.UserAction" method="{1}">
+			<result>/listUser.jsp</result><!-- 类型不写默认就是转发 -->
+		</action>
+		
+		<action name="user2_*" class="gz.itcast.e_scope.UserAction2" method="{1}">
+			<result>/listUser.jsp</result><!-- 类型不写默认是转发 -->
+		</action>
+		
+		<action name="book_*" class="gz.itcast.e_scope.BookAction" method="{1}">
+			<result>/listUser.jsp</result>		
+		</action>
+	</package>
+</struts>

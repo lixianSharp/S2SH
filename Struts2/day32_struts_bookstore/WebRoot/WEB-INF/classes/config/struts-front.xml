@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<!-- 前台的配置 -->
+<struts>
+	<package name="front" extends="struts-default" namespace="/front">
+		<!-- 主页模块的配置 -->
+		<action name="index_*" class="gz.itcast.biz.front.index.web.action.IndexAction" method="{1}">
+			<result name="showIndex">/jsp/front/index/shopIndex.jsp</result>
+			<result name="queryBooks">/jsp/front/book/list.jsp</result>
+			<result name="queryBook">/jsp/front/book/detail.jsp</result>
+		</action>
+		
+		<!-- 用户模块 -->
+		<action name="user_*" class="gz.itcast.biz.front.user.web.action.UserAction" method="{1}">
+			<result name="login_input">/jsp/front/user/login.jsp</result>
+			<result name="reg_input">/jsp/front/user/reg.jsp</result>
+			<result name="reg_succ">/jsp/front/user/regsucc.jsp</result>
+			<!-- 重定向到action -->
+			<result name="login" type="redirectAction">
+				<param name="namespace">/front</param>
+				<param name="actionName">index_showIndex</param>
+			</result>
+			<!-- 错误视图 -->
+			<result name="input">/jsp/front/user/reg.jsp</result>
+		</action>
+	
+	</package>
+</struts>

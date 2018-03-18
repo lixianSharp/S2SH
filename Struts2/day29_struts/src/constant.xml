@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下 -->
+<struts>
+	<!-- 修改default.properties文件的常量 -->
+	<!--修改action访问后缀名
+	 后缀名规则：
+	 	内容					访问路径
+		action           Book_list.action(ok)  /                 Book_list(不行！)
+		action,do        Book_list.action  /  Book_list.do(ok)  / 	 Book_list(不行！)
+		action,do,,      Book_list.action  /  Book_list.do(ok) / Book_list(ok)   
+			例如：http://localhost:8080/day29_struts/cons/book_add
+	 -->
+	 <!-- 自定义后缀修改常量 -->
+	 <constant name="struts.action.extension" value="action,do,,"></constant>
+	 <!-- 指定默认编码集,作用于HttpServletRequest的setCharacterEncoding方法 和freemarker 、velocity的输出  -->
+	 <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	 <!--修改动态方法调用：
+	 
+	   注意：如果打开动态方法调用，那么该Action对象下的所有方法 都会对外暴露，存在一定安全隐患，通常把它关闭调用
+	  
+	  -->
+	  <constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
+	  <!-- 修改临时文件存放的目录 -->
+	  <constant name="struts.multipart.saveDir" value="D:/qwert/"></constant>
+	  <!-- 修改文件上传的大小 -->
+	  <constant name="struts.multipart.maxSize" value="100000000"></constant>
+</struts>
+
+

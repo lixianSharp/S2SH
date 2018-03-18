@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下  -->
+<struts>
+	<package name="login" extends="struts-default" namespace="/" abstract="false">
+		<action name="login" class="gz.itcast.action.LoginAction">
+			<result name="success" type="chain">login2</result>
+			<!-- chain: 转发到Action。可以在不同Action中通过request共享数据。 -->
+		</action>
+		
+		<!-- 配置Action  http://localhost:8080/day28_struts/login2.action-->
+		<action name="login2" class="gz.itcast.action.LoginAction" method="login">
+			<result name="login">/index.jsp</result>
+		</action>
+	</package>
+
+	<!-- 
+		执行了LoginAction的execute方法
+		执行了LoginAction的login方法
+		lxyName=李贤元
+		并且浏览器中会跳转到index.jsp页面
+	 -->
+</struts>

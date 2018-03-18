@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+  
+<!-- 
+用xml配置方式对action的指定方法进行验证
+	xml配置数据验证的规则：	
+		1）编写一个xml文件，名称： Action文件名-访问方法路径-validation.xml
+					例如： UserAction的register方法： user_register路径访问
+						文件名：   UserAction-user_register-validation.xml
+		2）该xml文件必须放在Action文件的同一目录
+		3）这种方式只对action的指定的方法有效。例如本xml配置文件的验证只对UserAction中的register方法有效，也只对该方法进行验证
+ -->
+
+<validators>
+	<!-- /com/opensymphony/xwork2/validator/validators/default.xml 详情请查看这个 -->
+	<!-- 验证用户名 -->
+	<field name="user.name"><!-- 这行的name表示：你要验证的属性(或字段) -->
+	<!-- type:代表xwork中定义的可以使用的验证类型 -->
+		<field-validator type="requiredstring">
+			<!-- 当出现错误时，提示的错误信息 -->
+			<message>用户名必填</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<!-- 用户名长度6~16位 -->
+			<param name="minLength">6</param>
+			<param name="maxLength">16</param>
+			<!-- 当出现错误时，提示的错误信息 -->
+			<message>用户名长度必须为6~16位</message>
+		</field-validator>
+	</field>
+	
+	<!-- 验证密码 -->
+	<field name="user.password"><!-- 这行的name表示：你要验证的属性(或字段) -->
+		<field-validator type="requiredstring">
+			<message>密码必填</message>
+		</field-validator>
+		<!-- 4~12位字母或数字 -->
+		<field-validator type="regex">
+			<!-- 注入正则的字符串 -->
+			<param name="expression">^[a-zA-Z0-9]{4,12}</param>
+			<!-- 当出现错误时，提示的错误信息 -->
+			<message>密码必须为4到12位的字母或数字</message>
+		</field-validator>
+	</field>
+</validators> 		
+  		
+  		
+  		
+  		

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 该文件默认情况下必须放在项目的src目录下  -->
+<struts>
+	<!-- 一个业务方法(Action对象中的一个方法)使用一个action配置。弊端：需要管理更多的配置信息 -->
+	<!-- 
+	<package name="user" extends="struts-default" namespace="/path" abstract="false">
+		一个业务方法(Action对象中的一个方法)使用一个action配置。弊端：需要管理更多的配置信息
+		http://localhost:8080/day29_struts/path/login.action
+		<action name="login" class="gz.itcast.b_path.UserAction" method="login">
+			<result name="login">/index.jsp</result>
+		</action>
+		<action name="regist" class="gz.itcast.b_path.UserAction" method="regist">
+			<result name="regist">/index.jsp</result>
+		</action>	
+	</package>
+	
+	<package name="book" extends="struts-default" namespace="/path" abstract="false">
+		<action name="add" class="gz.itcast.b_path.BookAction" method="add">
+			<result name="add">/index.jsp</result>
+		</action>
+		<action name="list" class="gz.itcast.b_path.BookAction" method="list">
+			<result name="list">/index.jsp</result>
+		</action>
+	</package> 
+	-->
+
+<!-- 以下是对上面的改进！！！！ -->
+	
+	
+	<!--一个模块(Action对象)使用一个action配置  -->
+	<!-- 我们把上面的改进一下，使用一个模块(Aciton对象)使用一个action配置的方式来做 -->
+	<!-- 
+		* (星号):表示路径的通配符。使用通配符的内容：{1} (表示获取第一个通配符的实际内容)
+		好处：大大地减少action的配置
+		注意：使用通配符的方式来做是有一个前提的约定的：Action中方法返回的视图标记必须要和该方法名一样。
+	 -->
+	 <!-- 1表示第一个星号(*) -->
+	<!-- 
+	<package name="path"  namespace="/path" extends="struts-default">
+		<action name="user_*" class="gz.itcast.b_path.UserAction" method="{1}">
+			<result name="{1}">/{1}.jsp</result>
+		</action>
+
+		<action name="book_*" class="gz.itcast.b_path.BookAction" method="{1}">
+			<result name="{1}">/index.jsp</result>
+		</action>
+	</package>	
+	 -->
+	
+	
+	<!-- http://localhost:8080/day28_struts/path/user_login.action 访问login方法 -->
+	<!-- http://localhost:8080/day28_struts/path/user_register.action 访问register方法 -->			
+	<!-- 多个模块(多个Action对象)使用一个action配置 -->
+	<!-- 
+		 约定前提：第一个星号代表模块，第二个星号代表方法.
+		 	 User_login
+		 	 
+		 	http://localhost:8080/day29_struts/path/User_login.action
+		 	http://localhost:8080/day29_struts/path/Book_add.action
+	 -->
+	<package name="path" namespace="/path" extends="struts-default" abstract="false">
+		<action name="*_*" class="gz.itcast.b_path.{1}Action" method="{2}">
+			<result name="{2}">/{1}/{2}.jsp</result><!-- /Book/add.jsp Book文件夹下的add.jsp资源(页面) -->
+		</action>
+	</package>
+	
+	
+</struts>
