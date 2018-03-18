@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>day36_struts-hibernate</display-name>
+
+	<!-- 自定义拦截器的配置 -->
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<!-- 自定义拦截器类的全路径 -->
+		<filter-class>cn.itcast.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<!-- 要拦截的东西 -->
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+
+
+	<!-- struts2核心过滤器的配置 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

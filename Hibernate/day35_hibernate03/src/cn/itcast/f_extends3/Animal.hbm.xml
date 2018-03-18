@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 复杂继承映射：
+	方式2:三张表
+	特点：
+		完全按照面向对象设计表结构
+		
+	每个类一张表，因为有两个子类，所以有三张表
+	
+	总结：
+		设计的表，是符合数据库的设计原则(三大范式)
+		但是，表结构、关系变得复杂，影响数据访问效率
+ -->
+<hibernate-mapping package="cn.itcast.f_extends3">
+	<class name="Animal" table="t_animal">
+		<id name="id"><!-- 父类的id -->
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="20"></property><!-- 父类中的 -->
+		
+		
+		<!-- 子类：猫 -->
+		<joined-subclass name="Cat" table="t_cat">
+			<key column="id"></key>
+			<property name="catching"></property>
+		</joined-subclass>
+	
+		
+		<!-- 子类：狗 -->
+		<joined-subclass name="Dog" table="t_dog">
+			<key column="id"></key>
+			<property name="play"></property>
+		</joined-subclass>
+
+	</class>
+
+
+</hibernate-mapping>	

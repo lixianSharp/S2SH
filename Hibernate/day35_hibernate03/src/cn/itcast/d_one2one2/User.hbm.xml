@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.d_one2one2">
+	<class name="User" table="t_user">
+		
+		<id name="id">
+			<!-- 指定了主键生成策略为“外键策略”， 把别的表的主键作为当前表的主键！ -->
+			<generator class="foreign">
+				<param name="property">idCard</param>
+			</generator>
+		</id>
+		<property name="name" length="50"></property>
+		<property name="sex" type="character" length="1"></property>
+		
+		<!-- 
+			特殊的一对一映射，主键生成策略为“外键”
+			constrained="true"  在主键上，添加外键约束！
+		 -->
+		<one-to-one name="idCard" class="IdCard" constrained="true"></one-to-one>		 
+	</class>
+</hibernate-mapping>

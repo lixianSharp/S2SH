@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 
+	hibernate的映射配置
+	
+	通过XML映射，把对象映射到数据库的表中！
+	
+	package:表示包名;可选，如果没写，则后面的类必须指定类的全名
+	auto-import="true" (是否自动导包):默认为true，即在写hql的时候，会自动引入包名;
+									如果为false，hql中对象要写上包名称。
+									Query q = session.createQuery("from cn.itcast.b_api.User");
+ -->        
+<hibernate-mapping package="cn.itcast.b_api" auto-import="true">
+	<!-- 
+		class: 表示映射的一个javabean对象
+				(可以有多个class及欸但，但一般一个映射文件对应一个class)
+			 name: 表示映射的类(实体/javabean)的名称
+			 table: (可选)表示类的名称对应的表。如果不写默认与类名称一样。
+	 -->
+	<class name="User" table="t_user">
+		<!-- 
+			id: 表示映射的是主键.
+				注意：在hibernate的映射文件中，必须要有主键映射!
+					 那就要求表必须要有主键！
+			
+			主键约束 = 唯一约束+非空
+			generator:表示的是主键生成策略.(Api:  5.1.2.2.1. Various additional generators)
+				class:
+					increment:用于long，short 或者int 类型生成唯一标识。只有在没有其他进程往同一张表中插入数据时才能使用，在集群下不要使用。
+					identity: 主键自增长，mysql/sqlServer等数据库试用的自增长方式
+					sequence: 以序列的方式实现自增长
+					native： 表示主键自增长  根据底层数据库的能力选择identity、sequence 或 hilo 中的一个。
+					assigned： 手动指定主键的值。
+					uuid： uuid的值作为主键，确保一定唯一。
+					
+		 -->
+		<id name="userId" column="userId"><!-- name:表示属性  column:表示字段   这一行的可以理解为比较特殊的，可以理解为主键-->
+			<generator class="native"></generator><!-- 这个表示自增长 -->
+		</id>
+		
+		<!-- 
+			property:表示普通字段的映射。
+				name： 属性的名称
+				column：(可选)，如果没有指定，与属性名称一致。
+				length: 表示字符长度，只对字符类型有效。
+				type：数据库中字段的类型(如果没有指定，会匹配属性的类型)
+						也可以用hibernate中指定的类型:小写开头
+						也可以用java中类型:类名称一定要写类的全名
+				unique: 设置为true表示给当前列添加唯一约束
+						(主键约束=唯一约束+非空)
+						
+		 -->
+		<property name="userName" type="java.lang.String" column="userName" length="50" unique="true"></property>
+		<property name="age" column="age"></property>
+		
+		<!-- 注意：如果列名称对应的是数据库中的关键字，则需要处理 -->
+		<!-- <property name="desc" column="'desc'" length="20"></property> -->
+		
+	</class>
+	
+
+</hibernate-mapping>

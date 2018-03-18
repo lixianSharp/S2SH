@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 用户映射文件配置 -->
+<hibernate-mapping package="cn.itcast.d_one2one">
+	<class name="User" table="t_user">
+	
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="50"></property>
+		<property name="sex" type="character" length="1"></property>
+		
+		<!-- 一对一，有外键方 -->
+		<many-to-one name="idCard" column="card_id" class="IdCard" unique="true"></many-to-one>
+	</class> 
+
+</hibernate-mapping>
+
+
+
+

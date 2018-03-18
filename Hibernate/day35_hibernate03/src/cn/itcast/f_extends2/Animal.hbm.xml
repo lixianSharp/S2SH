@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 复杂继承映射：
+	方式1：整个继承结构一张表
+	特点：
+		所有的子类都写到一个映射文件中！
+		用一张表存储所有的子类信息
+	总结：生成的表，不符合数据库设计原则！
+		因为所有子类都用一张表存储，存在很大的冗余字段！
+ -->
+<hibernate-mapping package="cn.itcast.f_extends2">
+	<!-- 只有一张父类的t_animal表，所有子类都用同一张表 -->
+	<class name="Animal" table="t_animal">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<!-- 指定鉴别器字段用于区分不同的子类信息 -->
+		<discriminator column="type_"></discriminator>
+		<!-- 父类的name属性 -->
+		<property name="name" length="20"></property>
+		
+		<!-- 子类：猫 -->
+		<!-- discriminator-value : 指定鉴别器字段的值，如果没有指定，默认是类的全名 -->
+		<subclass name="Cat" discriminator-value="cat_">
+			<property name="catching"></property>
+		</subclass>
+		
+		
+		<!-- 子类：狗 -->
+		<!-- discriminator-value : 指定鉴别器字段的值，如果没有指定，默认是类的全名 -->
+		<subclass name="Dog" discriminator-value="dog_">
+			<property name="play"></property>
+		</subclass>
+	</class>
+</hibernate-mapping>	

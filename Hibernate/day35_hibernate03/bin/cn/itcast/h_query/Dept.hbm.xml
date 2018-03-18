@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.h_query">
+	<class name="Dept" table="t_dept">
+	
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="deptName" length="20"></property>
+		
+		<!-- 一对多的映射配置 -->
+		<!-- 
+			映射的集合
+			映射的表
+		 -->
+		<!-- 一对多映射的配置：
+	  	映射的关键点：
+	  		1、映射的集合属性：employees
+	  		2、集合属性：映射到的表：t_employee
+			3、映射到的表的外键：dept_id
+			4、集合属性的类型
+		 -->		
+		<set name="employees" cascade="save-update" table="t_employee">
+			<key column="dept_id"></key>
+			<one-to-many class="Employee"/>
+		</set>
+		
+		
+	</class>
+	
+	<!-- 定义hql查询 -->
+	<query name="my_hql_select">
+		<!-- from Dept where deptName=:name_ -->
+		<!-- from Dept where id &lt; 4 -->
+		
+		<!-- CDATE区, 可以对批量转译 -->
+		<![CDATA[
+			from Dept where id<4
+		]]>
+	</query>	
+
+</hibernate-mapping>

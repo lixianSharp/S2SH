@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 用户映射文件 -->
+<hibernate-mapping package="cn.itcast.d_many2one" auto-import="true">
+	<class name="Users" table="t_users" lazy="true"><!-- 开启懒加载 -->
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="50"></property>
+		<property name="age"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 复杂继承映射：
+	方式3:每个子类一张表，因为有两个子类，所以有两张表
+	
+	abstract= "true" 表示当前类不对应表
+ -->
+<hibernate-mapping package="cn.itcast.f_extends4">
+	<class name="Animal" abstract="true">
+		<id name="id">
+			<generator class="assigned"></generator><!-- 主键不自增长，手动输入 -->
+		</id>
+		<!-- 父类的name -->
+		<property name="name" length="20"></property>
+		
+		<!-- 注意：使用union-subclass要求主键不能自增长！ -->
+		<!-- 子类：猫 -->
+		<union-subclass name="Cat" table="t_cat">
+			<property name="catching"></property>
+		</union-subclass>
+
+		<!-- 子类：狗 -->
+		<union-subclass name="Dog" table="t_dog">
+			<property name="play"></property>
+		</union-subclass>
+	</class>
+</hibernate-mapping>	

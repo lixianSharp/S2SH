@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.d_one2one2">
+	<class name="IdCard" table="t_idcard">
+		
+		<id name="cardNo">
+			<generator class="assigned"></generator><!-- 表示主键不是自增长方式，是手动指定方式 -->
+		</id>
+		<property name="place" length="200"></property>
+		<property name="date" type="date"></property>
+		
+		<!-- 一对一映射： 无外键方 -->
+		<one-to-one name="user" class="User"></one-to-one>
+	</class>
+	
+
+</hibernate-mapping>
+
+
+
+
+
+
+

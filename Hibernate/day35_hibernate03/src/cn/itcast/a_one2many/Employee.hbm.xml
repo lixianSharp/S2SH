@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 员工映射文件 -->
+<hibernate-mapping package="cn.itcast.a_one2many" auto-import="true">
+	<class name="Employee" table="t_employee">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name" length="50"></property>
+		<property name="salary" ></property>
+		
+		
+	<!-- 员工和部门的关系：多对一 -->
+	<!-- 多对一的配置 -->
+	<!-- 
+		多对一的配置：
+			name:1、映射的对象
+			column:2、对象对应的外键字段
+			class:3、对象的类型
+		注意：
+			对象一定是有映射文件进行映射的！(cn.itcast.a._one2many.Dept 对应有映射文件)
+	 -->
+	 <!-- 如果这个也配的话也没什么影响，如果这个也配置过去了就叫做：一对多与多对一，可以通过双向维护关系 -->
+	<many-to-one name="dept" column="dept_id" class="Dept"></many-to-one>
+	</class>
+	
+	
+
+</hibernate-mapping>
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!-- 
+hibernate.cfg.xml 配置详解:
+	
+	里面有常用配置，如：
+		#hibernate.dialect org.hibernate.dialect.MySQLDialect
+		#hibernate.dialect org.hibernate.dialect.MySQLInnoDBDialect
+		#hibernate.dialect org.hibernate.dialect.MySQLMyISAMDialect
+		#hibernate.connection.driver_class com.mysql.jdbc.Driver
+		#hibernate.connection.url jdbc:mysql://localhost:3306/hib_demo
+		#hibernate.connection.username root
+		#hibernate.connection.password root
+
+
+ -->
+<!-- 主配置文件：hibernate.cfg.xml -->
+<hibernate-configuration>
+	<session-factory>
+		<!-- 一、数据库连接的参数配置 -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hib_demo</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <!-- 通过数据库方言，告诉hibernate如何生成sql。hibernate会根据配置的方言，会生成符合当前数据库语法的sql语句-->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- 通过快捷键ctrl+shift+t 之后输入mysql*dialect* 找到 -->
+	
+		
+		<!-- 二、hibernate其他常用配置 -->
+		<!-- 2.1 查看hibernate生成的sql语句 -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- 2.2 格式化sql语句，就是让sql语句比较好看，便于维护 -->
+		<property name="hibernate.format_sql">true</property>
+		<!-- 2.3 自动建表， -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- 
+			自动建表配置详解：
+				#hibernate.hbm2ddl.auto create-drop   每次在创建sessionFactory的时候创建
+												  				 表；执行sf.close()删除表。
+				#hibernate.hbm2ddl.auto create		   每次都先删除表，再创建新的表
+				#hibernate.hbm2ddl.auto update       如果表不存在则创建，存在就不创建！
+				#hibernate.hbm2ddl.auto validate     检查映射配置与数据库结构是否一致，不一致就报错!(严格)
+		 -->
+		
+		
+		<!-- 三、映射配置,加载映射文件 -->
+		<!-- <mapping resource="cn/itcast/a_config/Users.hbm.xml"/> -->
+		<!-- <mapping resource="cn/itcast/b_api/User.hbm.xml"/> -->
+		<mapping resource="cn/itcast/c_composite/Employee.hbm.xml"/> 
+		<!-- <mapping resource="cn/itcast/d_crud/Employee.hbm.xml"/> -->
+		
+	</session-factory>
+</hibernate-configuration>
+
+
+
+
+
+

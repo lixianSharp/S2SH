@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 组件关系的映射关系的映射配置 
+ 	 组合关系的映射叫组件映射	
+
+  组建映射：
+  	对象之间的关系：
+  		组合关系：一个类中包含对另外一个类的引用
+  		继承关系：一个类继承另外一个类
+  	映射：
+  		组合关系的映射就是"组件映射"
+  		继承关系的映射就是"继承映射"
+  ·
+  ··	组建类和包含的组建类同时映射到一个表
+
+ 组件类和包含的组件类同时映射到一个表 -->
+<hibernate-mapping package="cn.itcast.e_component" >
+	<class name="Car" table="t_car">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="type" type="string"></property>
+		
+		
+		<!-- 组件映射配置 
+			component中的参数：
+				name:组件类中包含的组件类的引用
+				class:被包含的组件类
+			property中的参数：
+				name:被包含的组件类中的各个属性
+		-->
+		<component name="wheel" class="Wheel">
+			<property name="count"></property>
+			<property name="size"></property>
+		</component>
+	</class>
+
+</hibernate-mapping> 

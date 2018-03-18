@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 有联合主键的配置 -->
+<hibernate-mapping package="cn.itcast.c_composite" auto-import="true">
+	<class name="Employee" table="t_employee">
+		<!-- 联合主键 -->
+		<composite-id name="keys"><!-- 联合主键对象 -->
+			<key-property name="name"></key-property>
+			<key-property name="address"></key-property>
+		</composite-id>
+		
+		<property name="dept" length="50"></property>
+		<!-- 数据库生成的字段是:date   是关键字，所以需要处理一下 -->
+	  <!--   <properties name="birth" type="date"></properties>  -->
+		
+		<!-- hibernate使用timestamp,生成的数据库日期是:datetime -->
+		<property name="birth" type="timestamp"></property>
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 开发人员映射配置 -->
+<hibernate-mapping package="cn.itcast.c_many2many">
+	<class name="Person" table="t_person">
+		<id name="personId" column="personId">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name" length="20"></property>
+
+
+		<!-- 多对多配置
+			name 映射的集合属性
+			table 集合元素映射的中间表
+			key 中间表外键字段
+			
+			many-to-many（确立关系）
+				column 当前外键字段对应的字段
+				class  集合元素的类型
+				
+			inverse 
+				true 表示控制权转移！当前方(Project) 没有控制权! 不能维护person与project的关系				
+		 -->
+		<set name="projects" table="t_relation" ><!-- 表t_relation是中间表 -->
+			<!-- 中间表的外键字段 -->
+			<key column="person_id"></key>
+			<!--  -->
+			<many-to-many column="project_id" class="Project"></many-to-many>
+		</set>
+	</class>
+
+</hibernate-mapping>
+

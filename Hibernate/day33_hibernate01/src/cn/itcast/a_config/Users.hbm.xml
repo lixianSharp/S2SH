@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- javabean/映射文件 -->
+<!-- 
+	通过XML映射，把对象映射到数据库表中。
+	注意：使用hibernate的时候，表中必须要有主键
+ -->
+<hibernate-mapping package="cn.itcast.a_config">
+	<class name="Users" table="users"><!-- name表示javabean的名称，table表示映射到数据库中的表的名称 -->
+		<!-- 
+			id标签表示主键：
+				name表示javabean中的主键
+				column表示映射到数据库中表的主键
+		 -->
+		<id name="userId" column="id">
+			<generator class="native"></generator><!-- native表示自增长 -->
+		</id>
+		<!-- 
+			property中的属性：
+				name:表示javabean中的属性    
+				column:表示映射在数据库表中的字段
+		 -->
+		<property name="userName" column="name"></property>
+		<property name="age" column="age"></property>
+	</class>
+</hibernate-mapping>        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

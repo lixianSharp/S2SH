@@ -1,0 +1,42 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!-- hibernate主配置文件的配置 -->
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- 连接数据库的配置 -->
+		<!-- 连接数据的驱动 -->
+		<property name="hibernate.connection.url">jdbc:mysql:///hib_demo</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.pool_size"></property>
+
+		<!-- 连接数据库的方言 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 是否显示sql语句 -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- 是否格式化sql，也就是让sql语句更好看，便于维护 -->
+		<property name="hibernate.format_sql">true</property>
+
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- 配置session创建方式：thread：以线程方式创建 -->
+		<property name="hibernate.current_session_context_class">thread</property>
+
+
+		<!-- 加载映射文件 -->
+		<mapping resource="cn/itcast/entity/Dept.hbm.xml"/>
+		<mapping resource="cn/itcast/entity/Employee.hbm.xml"/>
+		
+	</session-factory>
+
+
+
+
+
+
+</hibernate-configuration>
+

@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	<!-- 一、数据库连接的参数配置 -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hib_demo</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <!-- 通过数据库方言，告诉hibernate如何生成sql。hibernate会根据配置的方言，会生成符合当前数据库语法的sql语句-->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- 通过快捷键ctrl+shift+t 之后输入mysql*dialect* 找到 -->
+        <!-- 二、hibernate其它常用配置 -->
+        <!-- 2.1 查看hibernate生成的sql语句 -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- 2.2 格式化sql语句  就是让sql语句比较好看，便于维护-->
+       <!--  <property name="hibernate.format_sql">true</property>  -->
+        <!-- 2.3 自动建表  这个会每次先删除表，再去创建 -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <!-- 3、加载映射文件 -->
+    </session-factory>
+</hibernate-configuration>

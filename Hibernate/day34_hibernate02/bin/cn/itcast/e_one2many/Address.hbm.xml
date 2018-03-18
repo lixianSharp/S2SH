@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.e_one2many">
+	<class name="Address" table="t_address" lazy="true"><!-- 开启懒加载 -->
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="50"></property>
+		<property name="shortName" length="20"></property>
+		<property name="code" length="20"></property>
+		
+	
+		<!-- 注意：下面注释掉的可以直接忽略不看 -->
+		<!-- 
+			多对一的配置：
+				1、映射的对象
+				2、对象对应的外键字段
+				3、对象的类型
+			注意：
+				对象一定是有映射文件进行映射的！
+				(cn.itcast.d_many2one.Users 对应有映射文件)
+		
+		 -->
+		 <!-- 如果这个也配的话也没什么影响，如果这个也配置过去了就叫做：一对多与多对一，可以通过双向维护关系 -->
+		<!--  <many-to-one name="user" column="user_id" class="cn.itcast.d_many2one.Users"></many-to-one> -->
+			
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 地址映射文件  -->
+<!-- 地址与用于关系：多对一，多个地址对应一个用户 -->
+<hibernate-mapping package="cn.itcast.d_many2one"  auto-import="true">
+	<class name="Address" table="t_address" lazy="true"><!-- 开启懒加载 -->
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="50"></property>
+		<property name="shortName" length="20"></property>
+		<property name="code" length="20"></property>
+		<!-- 
+			多对一的配置：
+				name :  1、映射的对象  
+				column: 2、对象对应的外键字段(引用t_user表中的id，也就即user_id是t_address表中的外键)
+				class : 3、对象的类型
+			注意：
+				对象一定是有映射文件进行映射的！(cn.itcast.d_many2one.Users 对应有映射文件)
+		 -->
+		 <many-to-one name="user" column="user_id" class="cn.itcast.d_many2one.Users">
+		 </many-to-one>
+	</class>
+</hibernate-mapping>

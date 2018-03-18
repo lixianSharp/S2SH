@@ -1,0 +1,51 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+    	<!-- 一、数据库连接的参数配置 -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hib_demo</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <!-- 通过数据库方言，告诉hibernate如何生成sql。hibernate会根据配置的方言，会生成符合当前数据库语法的sql语句-->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property><!-- 通过快捷键ctrl+shift+t 之后输入mysql*dialect* 找到 -->
+        
+        <!-- 二、hibernate其它常用配置 -->
+        <!-- 2.1 查看hibernate生成的sql语句 -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- 2.2 格式化sql语句  就是让sql语句比较好看，便于维护-->
+        <property name="hibernate.format_sql">false</property> 
+        <!-- 2.3 自动建表  这个会每次先删除表，再去创建 -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- hibernate对连接池的支持 -->
+		<!-- c3p0连接池支持类 -->
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<!-- 最大连接数 -->
+		<property name="hibernate.c3p0.max_size">6</property>
+		<!-- 最小连接数 -->
+		<property name="hibernate.c3p0.min_size">3</property>
+		<!-- 当连接不够用时每次的增量 -->
+		<property name="hibernate.c3p0.acquire_increment">2</property>
+		<!-- 最多执行的命令的个数 -->
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<!-- 连接空闲测试时间 -->
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+        
+        <!-- 配置session的创建方式，线程方式创建session -->
+        <!-- <property name="hibernate.current_session_context_class">thread</property> -->
+        
+ 		<!-- 三、二级缓存配置 -->
+		<!-- 1）、开启二级缓存 -->
+		<!-- <property name="hibernate.cache.use_query_cache">true</property> -->
+		<!-- 2）指定使用哪一种二级缓存 -->
+		<!-- <property name="hibernate.cache.provider_class"> org.hibernate.cache.HashtableCacheProvider</property> -->
+		<!-- 3）加入二级缓存的类 -->
+		<!-- <class-cache usage="read-write" class="cn.itcast.b_second_cache.Dept" />
+		<class-cache usage="read-write" class="cn.itcast.b_second_cache.Employee" /> -->
+		<!-- 集合缓存 （集合缓存，集合元素也要放入二级缓存） -->
+		<!-- <collection-cache usage="read-write" collection="cn.itcast.b_second_cache.Dept.employees" /> -->
+   	 </session-factory>
+</hibernate-configuration>

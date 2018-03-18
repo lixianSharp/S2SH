@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 映射配置文件 -->
+<hibernate-mapping package="cn.itcast.a_status" auto-import="true">
+	<!-- 要映射的javabean -->
+	<class name="Employee" table="t_employee">
+		<!-- 主键 -->
+		<id name="id" column="id">
+			<generator class="native"></generator><!-- 主键自增长 -->
+		</id>
+		<!-- 其他字段的映射 -->
+		<property name="name" column="name" length="50"></property>
+		<property name="dept" column="dept" length="50"></property>
+		<property name="birth" type="timestamp"></property>
+	</class>
+
+</hibernate-mapping>

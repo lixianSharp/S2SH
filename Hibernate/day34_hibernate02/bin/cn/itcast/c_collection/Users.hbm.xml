@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping  package="cn.itcast.c_collection" auto-import="true">
+	<class name="Users" table="t_users" lazy="true"><!-- 开启了懒加载 -->
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" length="50"></property>
+		
+		<!-- Set集合映射：
+		当前用户对应的多个地址：
+			1、了解：
+				当前对象：Users
+				当前表：t_users
+				当前表主键:id
+			2、集合属性的映射：【private Set<String> addressSet;】
+				要映射的属性：集合属性 addressSet
+				映射到的表：t_addressSet
+				指定外键字段：user_id
+				外键字段之外的其他字段的映射：address
+		 -->
+		 <set name="addressSet" table="t_addressSet">
+		 	<!-- 表示外键字段，以用户表的主键作为t_addressSet表的外键 -->
+		 	<key  column="user_id"></key>
+		 	<!-- 表示t_addressSet表的其他字段  column="address"表示在当前数据库表中的字段 -->
+		 	<element column="address" type="string"></element>
+		 </set>
+		 
+		 
+		 <!-- List集合映射
+		 当前用户对应的多个地址：
+			1、了解：
+				当前对象：Users
+				当前表：t_users
+				当前表主键:id
+			2、集合属性的映射：【private List<String> addressList;】
+				要映射的属性：集合属性 addressList
+				映射到的表：t_addressList
+				指定外键字段：user_id
+				外键字段之外的其他字段的映射：address
+		 
+		  -->
+		 <list name="addressList" table="t_addressList">
+		 	<!-- 外键字段，以用户表的外键作为t_addressList的主键 -->
+		 	<key column="user_id"></key>
+		 	<!-- 可以理解为在t_addressList表中的序号 -->
+		 	<list-index column="idx_"></list-index>
+		 	<element column="address" type="string"></element>
+		 </list>
+		
+		
+		<!-- Map集合映射
+		 当前用户对应的多个地址：
+			1、了解：
+				当前对象：Users
+				当前表：t_users
+				当前表主键:id
+			2、集合属性的映射：【private Map<String> addressMap;】
+				要映射的属性：集合属性 addressMap
+				映射到的表：t_addressMap
+				指定外键字段：user_id
+				外键字段之外的其他字段的映射：address
+			
+		 -->
+		 <map name="addressMap" table="t_addressMap">
+		 	<key column="user_id"></key><!-- 外键字段，以用户表的主键作为t_addressMap表的外键字段 -->
+		 	<map-key column="shortName" type="string"></map-key><!-- map集合中的键 -->
+		 	<element column="address" type="string"></element>
+		 </map>
+	</class>
+
+</hibernate-mapping>
